@@ -72,13 +72,29 @@ function knightMoves(startSquare, targetSquare) {
     queue.shift();
   }
 
-  console.log(visitedSquares);
-  console.log(targetSquare[0]);
-  console.log(targetSquare[1]);
-  console.log(queue[0].square[0]);
-  console.log(queue[0].square[1]);
-  console.log(queue[0]);
-  console.log(queue[0].parent);
+  let result = [];
+  let current = queue[0];
+
+  while (current !== null) {
+    result.unshift(current.square);
+    current = current.parent;
+  }
+
+  // console.log(visitedSquares);
+  // console.log(targetSquare[0]);
+  // console.log(targetSquare[1]);
+  // console.log(queue[0].square[0]);
+  // console.log(queue[0].square[1]);
+  // console.log(queue[0]);
+  // console.log(queue[0].parent);
+  // console.log(result);
+
+  console.log(`You made it in ${result.length - 1} moves! Here's your path:`);
+  for (const square of result) {
+    console.log(square);
+  }
+
+  return result;
 }
 
 function isVisited(square, visitedSquares) {
@@ -95,6 +111,7 @@ function isVisited(square, visitedSquares) {
 }
 
 console.log(knightMoves([0, 0], [7, 7]));
+console.log(knightMoves([3, 3], [4, 3]));
 
 // console.log(getLegalMoves([0, 0]));
 // console.log(getLegalMoves([7, 7]));

@@ -50,28 +50,48 @@ function getLegalMoves(square) {
 
 function knightMoves(startSquare, targetSquare) {
   let queue = [];
-  queue.push({ parent: null, position: startSquare });
+  let visitedSquares = [];
+  queue.push({ parent: null, square: startSquare });
+  visitedSquares.push(startSquare);
 
   while (
     queue.length > 0 &&
-    (queue[0].position[0] !== targetSquare[0] ||
-      queue[0].position[1] !== targetSquare[1])
+    (queue[0].square[0] !== targetSquare[0] ||
+      queue[0].square[1] !== targetSquare[1])
   ) {
     let current = queue[0];
-    let legalMoves = getLegalMoves(current.position);
+    let legalMoves = getLegalMoves(current.square);
     console.log(queue);
     for (const move of legalMoves) {
-      queue.push({ parent: current, position: move });
+      if (!isVisited(move, visitedSquares)) {
+        queue.push({ parent: current, square: move });
+        visitedSquares.push(move);
+      }
     }
 
     queue.shift();
   }
 
+  console.log(visitedSquares);
   console.log(targetSquare[0]);
   console.log(targetSquare[1]);
-  console.log(queue[0].position[0]);
-  console.log(queue[0].position[1]);
-  console.dir(queue[0]);
+  console.log(queue[0].square[0]);
+  console.log(queue[0].square[1]);
+  console.log(queue[0]);
+  console.log(queue[0].parent);
+}
+
+function isVisited(square, visitedSquares) {
+  for (let i = 0; i < visitedSquares.length; i++) {
+    if (
+      square[0] === visitedSquares[i][0] &&
+      square[1] === visitedSquares[i][1]
+    ) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 console.log(knightMoves([0, 0], [7, 7]));

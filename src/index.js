@@ -49,8 +49,8 @@ function getLegalMoves(square) {
 }
 
 function knightMoves(startSquare, targetSquare) {
-  let queue = [];
-  let visitedSquares = [];
+  const queue = [];
+  const visitedSquares = [];
   queue.push({ parent: null, square: startSquare });
   visitedSquares.push(startSquare);
 
@@ -59,9 +59,9 @@ function knightMoves(startSquare, targetSquare) {
     (queue[0].square[0] !== targetSquare[0] ||
       queue[0].square[1] !== targetSquare[1])
   ) {
-    let current = queue[0];
-    let legalMoves = getLegalMoves(current.square);
-    console.log(queue);
+    const current = queue[0];
+    const legalMoves = getLegalMoves(current.square);
+
     for (const move of legalMoves) {
       if (!isVisited(move, visitedSquares)) {
         queue.push({ parent: current, square: move });
@@ -72,22 +72,13 @@ function knightMoves(startSquare, targetSquare) {
     queue.shift();
   }
 
-  let result = [];
-  let current = queue[0];
+  const result = [];
+  let currentNode = queue[0];
 
-  while (current !== null) {
-    result.unshift(current.square);
-    current = current.parent;
+  while (currentNode !== null) {
+    result.unshift(currentNode.square);
+    currentNode = currentNode.parent;
   }
-
-  // console.log(visitedSquares);
-  // console.log(targetSquare[0]);
-  // console.log(targetSquare[1]);
-  // console.log(queue[0].square[0]);
-  // console.log(queue[0].square[1]);
-  // console.log(queue[0]);
-  // console.log(queue[0].parent);
-  // console.log(result);
 
   console.log(`You made it in ${result.length - 1} moves! Here's your path:`);
   for (const square of result) {
@@ -110,11 +101,7 @@ function isVisited(square, visitedSquares) {
   return false;
 }
 
+console.log(knightMoves([0, 0], [3, 3]));
+console.log(knightMoves([3, 3], [0, 0]));
 console.log(knightMoves([0, 0], [7, 7]));
 console.log(knightMoves([3, 3], [4, 3]));
-
-// console.log(getLegalMoves([0, 0]));
-// console.log(getLegalMoves([7, 7]));
-// console.log(getLegalMoves([3, 3]));
-// console.log(getLegalMoves([0, 3]));
-// console.log(getLegalMoves([3, 0]));
